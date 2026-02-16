@@ -7,67 +7,80 @@
 
 <style>
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-body { margin:0; font-family: Arial; background:#f4f4f4; text-align:center; }
+body {
+  margin:0;
+  font-family: Arial;
+  background:#f4f4f4;
+  text-align:center;
+}
+
 header { background:#222; color:white; padding:20px; }
-nav { background:#444; padding:10px; }
-nav a { color:white; text-decoration:none; margin:0 15px; }
-nav a:hover { text-decoration: underline; color:black; }
 
-.container { 
-    padding:40px; 
-    animation: fadeIn 2s ease-in-out;
+nav { background:#444; padding:10px; }
+nav a {
+  color:white;
+  text-decoration:none;
+  margin:0 15px;
+}
+nav a:hover {
+  text-decoration: underline;
+  color:black;
 }
 
-.audio-item { 
-    margin:20px 0; 
-    padding:20px; 
-    background:#007bff; 
-    color:white; 
-    border-radius:8px; 
+.container {
+  padding:40px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.audio-item {
+  margin:20px 0;
+  padding:20px;
+  background:#007bff;
+  color:white;
+  border-radius:8px;
 }
 
 audio {
-    width:100%;
-    max-width:400px;
-    margin-top:10px;
+  width:100%;
+  max-width:400px;
+  margin-top:10px;
 }
 
 .download-btn {
-    display:inline-block;
-    margin-top:10px;
-    padding:8px 15px;
-    background:white;
-    color:#007bff;
-    border-radius:5px;
-    text-decoration:none;
-    font-weight:bold;
+  display:inline-block;
+  margin-top:10px;
+  padding:8px 15px;
+  background:white;
+  color:#007bff;
+  border-radius:5px;
+  text-decoration:none;
+  font-weight:bold;
 }
 
 .download-btn:hover {
-    background:#ddd;
+  background:#ddd;
 }
 
 #searchBar {
-    padding:10px;
-    width:80%;
-    max-width:400px;
-    margin-bottom:20px;
-    border-radius:5px;
-    border:1px solid #ccc;
+  padding:10px;
+  width:80%;
+  max-width:400px;
+  margin-bottom:20px;
+  border-radius:5px;
+  border:1px solid #ccc;
 }
 
-/* Footer styling */
 footer {
-    background:#222;
-    color:white;
-    padding:15px 0;
-    text-align:center;
-    margin-top:40px;
-    border-top: 1px solid #444;
+  background:#222;
+  color:white;
+  padding:15px 0;
+  text-align:center;
+  margin-top:40px;
+  border-top:1px solid #444;
 }
 </style>
 </head>
@@ -75,66 +88,57 @@ footer {
 <body>
 
 <header>
-<h1>Audio Library</h1>
-<p>Tap to play or search your audio</p>
+  <h1>Audio Library</h1>
+  <p>Tap to play or search your audio</p>
 </header>
 
 <nav>
-<a href="index.html">Home</a>
-<a href="about.html">About</a>
-<a href="media.html">Media</a>
-<a href="contact.html">Contact</a>
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="media.html">Media</a>
+  <a href="contact.html">Contact</a>
 </nav>
 
 <div class="container">
+
 <h2>Search Audio</h2>
 <input type="text" id="searchBar" placeholder="Search audio...">
 
-<div id="audioList">
-  <!-- Audio items inserted dynamically -->
-</div>
+<div id="audioList"></div>
+
 </div>
 
 <footer>
-<p>© 2026 Dew Rajapaksha | All Rights Reserved</p>
+  <p>© 2026 Dew Rajapaksha | All Rights Reserved</p>
 </footer>
 
 <script>
-// Array of audios – works with GitHub Pages or raw Dropbox links
+// ===== Your audio list here =====
 const audios = [
   {
-    title: "Deweni Amma - දෙවෙනි අම්මා",
-    src: "https://www.dropbox.com/scl/fi/a2whm2n3kfd4zupmi6fv2/Deweni-Amma-Breath.Musix.mp3?raw=1",
-    downloadName: "Deweni-Amma-dewrajapaksha.mp3"
-  },
-  {
-    title: "Suruwama Ayine",
-    src: "https://www.dropbox.com/scl/fi/a2whm2n3kfd4zupmi6fv2/Suruwama-Ayine.mp3?raw=1",
-    downloadName: "Suruwama-Ayine-dewrajapaksha.mp3"
-  },
-  {
     title: "Thani Sithuwillaka - තනි සිතුවිල්ලක",
+    // make sure this file actually exists in your repo at `audio/3142.mp3`
     src: "audio/3142.mp3",
     downloadName: "Thani-Sithuwillaka-dewrajapaksha.mp3"
   }
-  // Add more audio objects here
+    
+  }
 ];
 
-// Sort audios alphabetically by title
+// sort alphabetically
 audios.sort((a,b) => a.title.localeCompare(b.title));
 
 const audioList = document.getElementById('audioList');
 
-// Function to render audio items
 function renderAudios(filter = "") {
-  audioList.innerHTML = ""; // Clear existing
+  audioList.innerHTML = "";
   const query = filter.toLowerCase();
 
   audios.forEach(audio => {
     if(audio.title.toLowerCase().includes(query)) {
       const div = document.createElement('div');
-      div.className = 'audio-item';
-      div.setAttribute('data-title', audio.title);
+      div.className = "audio-item";
+      div.setAttribute("data-title", audio.title);
       div.innerHTML = `
         <h3>${audio.title}</h3>
         <audio controls>
@@ -142,8 +146,10 @@ function renderAudios(filter = "") {
           Your browser does not support audio.
         </audio>
         <br>
-        <a class="download-btn" href="${audio.src}" download="${audio.downloadName}">
-          Download
+        <a class="download-btn"
+           href="${audio.src}"
+           download="${audio.downloadName}">
+           Download
         </a>
       `;
       audioList.appendChild(div);
@@ -151,12 +157,11 @@ function renderAudios(filter = "") {
   });
 }
 
-// Initial render
+// first render
 renderAudios();
 
-// Search functionality
-const searchBar = document.getElementById('searchBar');
-searchBar.addEventListener('input', function() {
+// search filter
+document.getElementById("searchBar").addEventListener("input", function() {
   renderAudios(this.value);
 });
 </script>
