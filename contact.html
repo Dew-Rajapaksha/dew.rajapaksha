@@ -5,7 +5,7 @@
 <title>Contact - Dew Rajapaksha</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Apple-Style Cross Platform Web Fonts -->
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+Sinhala:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -15,7 +15,7 @@
     to { opacity: 1; }
 }
 
-/* Global Font Setup */
+/* Global Styles */
 body {
     margin:0;
     font-family: 'Inter', 'Noto Sans Sinhala', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -31,7 +31,6 @@ header {
     color:white;
     padding:30px 20px;
 }
-
 header h1 {
     font-weight:600;
     letter-spacing:0.5px;
@@ -42,7 +41,6 @@ nav {
     background:#444;
     padding:12px;
 }
-
 nav a {
     color:white;
     text-decoration:none;
@@ -50,29 +48,23 @@ nav a {
     font-weight:600;
     transition:0.2s ease;
 }
-
-nav a:hover {
-    color:#ddd;
-}
+nav a:hover { color:#ddd; }
 
 /* Container */
 .container {
     padding:60px 20px;
     animation: fadeIn 1.5s ease-in-out;
 }
-
 .container h2 {
     font-weight:600;
     margin-bottom:20px;
 }
 
-/* WhatsApp Button */
-.contact-btn {
+/* Buttons */
+.contact-btn, .follow-btn {
     display:inline-block;
-    margin-top:20px;
+    margin:10px 10px 0 0;
     padding:14px 35px;
-    background:#25D366;
-    color:white;
     border:none;
     border-radius:12px;
     font-size:16px;
@@ -80,12 +72,15 @@ nav a:hover {
     cursor:pointer;
     transition:0.25s ease;
     box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    text-decoration:none;
+    color:white;
 }
 
-.contact-btn:hover {
-    transform:translateY(-2px);
-    background:#1ebe5d;
-}
+.contact-btn { background:#25D366; }
+.contact-btn:hover { background:#1ebe5d; transform:translateY(-2px); }
+
+.follow-btn { background:#1877F2; }
+.follow-btn:hover { background:#155db2; transform:translateY(-2px); }
 
 /* Footer */
 footer {
@@ -116,8 +111,16 @@ footer {
 <p>For Chat on WhatsApp:</p>
 
 <button class="contact-btn"
-onclick="window.open('https://wa.me/message/N5CG5VJXMOY6P1')">
+onclick="window.open('https://wa.me/message/N5CG5VJXMOY6P1', '_blank')">
 WhatsApp Me
+</button>
+
+
+<h2>Follow Us</h2>
+<p>Follow me on Facebook:</p>
+<button class="follow-btn"
+onclick="window.open('https://facebook.com/DewminaOfficialLK', '_blank')">
+Follow Me
 </button>
 
 </div>
