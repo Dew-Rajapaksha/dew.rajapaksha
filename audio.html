@@ -5,33 +5,25 @@
 <title>Audio Library - Dew Rajapaksha</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- Apple-style Web Fonts (Works for All Devices) -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+Sinhala:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 body {
   margin:0;
-  font-family: 'Inter', 'Noto Sans Sinhala', sans-serif;
+  font-family:'Inter','Noto Sans Sinhala',sans-serif;
   background:#f4f4f4;
   text-align:center;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-header { 
-  background:#222; 
-  color:white; 
-  padding:20px; 
+header {
+  background:#222;
+  color:white;
+  padding:20px;
 }
 
-nav { 
-  background:#444; 
-  padding:10px; 
+nav {
+  background:#444;
+  padding:10px;
 }
 
 nav a {
@@ -42,95 +34,67 @@ nav a {
 }
 
 nav a:hover {
-  text-decoration: underline;
   color:#ddd;
 }
 
 .container {
-  padding:40px;
-  animation: fadeIn 2s ease-in-out;
+  padding:40px 20px 100px;
 }
 
-.audio-item {
-  margin:20px 0;
-  padding:20px;
-  background:#007bff;
+/* AUDIO PLAYER */
+.audio-player {
+  background:#111;
   color:white;
+  padding:20px;
   border-radius:12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-bottom:20px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
 }
 
-audio {
+.audio-player h2 {
+  margin-bottom:10px;
+  font-size:18px;
+  text-align:center;
+}
+
+.audio-player audio {
   width:100%;
   max-width:400px;
-  margin-top:10px;
+  margin-bottom:10px;
 }
 
-.download-btn {
-  display:inline-block;
-  margin-top:10px;
-  padding:8px 15px;
-  background:white;
-  color:#007bff;
+/* MINI CONTROLS (DOWNLOAD + COPY LINK) */
+.audio-controls {
+  display:flex;
+  gap:10px;
+  flex-wrap: wrap;
+  justify-content:center;
+}
+
+.audio-controls button, .audio-controls a {
+  padding:10px 20px;
+  font-weight:600;
   border-radius:8px;
-  text-decoration:none;
-  font-weight:600;
-  font-size: 20;
-  transition:0.2s ease;
-}
-
-.download-btn:hover {
-  background:#f1f1f1;
-}
-
-.copy-btn {
-  display:inline-block;
-  margin-top:10px;
-  margin-left:10px;
-  padding:10px 25px;
-  background:#ffffff; /* custom color */
-  color:#007bff;      /* text color */
-  border-radius:8px;  /* same as download button */
-  text-decoration:none;
-  font-weight:600;
-  font-size: 20;
   border:none;
   cursor:pointer;
+  text-decoration:none;
+  text-align:center;
+  display:inline-block;
   transition:0.2s ease;
 }
 
-.copy-btn:hover {
-  background:#82dffd; /* hover color */
+.download-btn, .copy-btn {
+  background:white;
+  color:#007bff;
 }
 
-/* Tooltip styles */
-.tooltip {
-  display: inline-block;
-  position: relative;
+.download-btn:hover, .copy-btn:hover {
+  background:#e1e1e1;
 }
 
-.tooltip-text {
-  visibility: hidden;
-  background: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 10px;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%; /* above the button */
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s;
-  font-size: 12px;
-}
-
-.tooltip.show .tooltip-text {
-  visibility: visible;
-  opacity: 1;
-}
-
+/* SEARCH & SONG LIST */
 #searchBar {
   padding:10px;
   width:80%;
@@ -138,16 +102,28 @@ audio {
   margin-bottom:20px;
   border-radius:8px;
   border:1px solid #ccc;
-  font-family: 'Inter', 'Noto Sans Sinhala', sans-serif;
+}
+
+.song-item {
+  background:#007bff;
+  color:white;
+  padding:15px;
+  border-radius:12px;
+  margin:10px 0;
+  cursor:pointer;
+  transition:0.2s ease;
+}
+
+.song-item:hover {
+  background:#0056b3;
 }
 
 footer {
   background:#222;
   color:white;
-  padding:15px 0;
-  text-align:center;
+  padding:15px;
   margin-top:40px;
-  border-top:1px solid #444;
+  text-align:center;
 }
 </style>
 </head>
@@ -155,121 +131,104 @@ footer {
 <body>
 
 <header>
-  <h1>Audio Library</h1>
-  <p>Tap to play or search your audio</p>
+<h1>Audio Library</h1>
+<p>Tap to play or search your audio</p>
 </header>
 
 <nav>
-  <a href="index.html">Home</a>
-  <a href="about.html">About</a>
-  <a href="media.html">Media</a>
-  <a href="contact.html">Contact</a>
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="media.html">Media</a>
+<a href="contact.html">Contact</a>
 </nav>
 
 <div class="container">
 
+<!-- AUDIO PLAYER -->
+<div class="audio-player">
+<h2 id="nowPlaying">No song selected</h2>
+<audio id="mainAudio" controls></audio>
+
+<!-- DOWNLOAD + COPY LINK -->
+<div class="audio-controls">
+<a class="download-btn" id="downloadBtn" download>Download</a>
+<button class="copy-btn" id="copyBtn">Copy Link</button>
+</div>
+</div>
+
 <h2>Search Audio</h2>
 <input type="text" id="searchBar" placeholder="Search audio...">
-
-<div id="audioList"></div>
+<div id="songList"></div>
 
 </div>
 
 <footer>
-  <p>© 2026 Dew Rajapaksha | All Rights Reserved</p>
+<p>© 2026 Dew Rajapaksha | All Rights Reserved</p>
 </footer>
 
 <script>
-
-// ================= AUDIO LIST =================
-const audios = [
-  {
-    title: "Thani Sithuwillaka",
-    src: "audio/3142.mp3",
-    downloadName: "Thani-Sithuwillaka-dewrajapaksha.mp3"
-  },
-  {
-    title: "Abhutha Chodana - Ashen Chakrawarthi",
-    src: "audio/Abhutha.Chodana-Ashen.Chakrawarthi(Breath.Musix).mp3",
-    downloadName: "Abhutha.Chodana-Ashen.Chakrawarthi(Breath.Musix-Pow.By-Dew).mp3"
-  },
-  {
-    title: "Ketu Adare - Ashen Chakrawarthi",
-    src: "audio/Ketu.Adare-Ashen.Chakrawarthi(Breath.Music).mp3",
-    downloadName: "Ketu.Adare-Ashen.Chakrawarthi(Breath.Music-Pow.By-Dew).mp3"
-  },
-  {
-    title: "Suruwama Ayine - Cover Song",
-    src: "audio/Suruwama.Ayine-Cover.Song(Breath.Musix).mp3",
-    downloadName: "Suruwama.Ayine-Cover.Song(Breath.Musix-Pow.By-Dew).mp3"
-  }
-  
+// ===== SONGS =====
+// Internal song objects with title, file path, and download name
+const songs = [
+  { title:"Thani Sithuwillaka", src:"audio/3142.mp3", downloadName:"Thani.Sithuwillaka(Breath.Musix-Pow.By-Dew).mp3" },
+  { title:"Abhutha Chodana - Ashen Chakrawarthi", src:"audio/Abhutha.Chodana-Ashen.Chakrawarthi(Breath.Musix).mp3", downloadName:"Abhutha-Chodana.mp3" },
+  { title:"Ketu Adare - Ashen Chakrawarthi", src:"audio/Ketu.Adare-Ashen.Chakrawarthi(Breath.Music).mp3", downloadName:"Ketu.Adare-Ashen.Chakrawarthi(Breath.Musix-Pow.By-Dew).mp3" },
+  { title:"Suruwama Ayine - Cover Song", src:"audio/Suruwama.Ayine-Cover.Song(Breath.Musix).mp3", downloadName:"Suruwama.Ayine-Cover(Breath.Musix-Pow.By-Dew).mp3" }
 ];
 
-// Sort alphabetically
-audios.sort((a,b) => a.title.localeCompare(b.title));
+const mainAudio=document.getElementById("mainAudio");
+const nowPlaying=document.getElementById("nowPlaying");
+const downloadBtn=document.getElementById("downloadBtn");
+const copyBtn=document.getElementById("copyBtn");
+const songList=document.getElementById("songList");
 
-const audioList = document.getElementById('audioList');
+let currentIndex = null;
 
-function renderAudios(filter = "") {
-  audioList.innerHTML = "";
-  const query = filter.toLowerCase();
+// Load a song
+function loadSong(index){
+  currentIndex = index;
+  const song = songs[index];
 
-  audios.forEach(audio => {
-    if(audio.title.toLowerCase().includes(query)) {
-      const div = document.createElement('div');
-      div.className = 'audio-item';
+  mainAudio.src = song.src;
+  mainAudio.play();
+  nowPlaying.innerText = song.title;
 
-      // Add Copy Link button with tooltip
-      div.innerHTML = `
-        <h3>${audio.title}</h3>
-        <audio controls>
-          <source src="${audio.src}" type="audio/mpeg">
-          Your browser does not support audio.
-        </audio>
-        <br>
-        <a class="download-btn" href="${audio.src}" download="${audio.downloadName}">
-          Download
-        </a>
-        <span class="tooltip">
-          <button class="copy-btn" data-link="${audio.src}">Copy Link</button>
-          <span class="tooltip-text">Copied!</span>
-        </span>
-      `;
+  downloadBtn.onclick = () => {
+    const link = document.createElement("a");
+    link.href = song.src;
+    link.download = song.downloadName;
+    link.click();
+  };
 
-      audioList.appendChild(div);
-
-      // Copy link functionality with tooltip
-      const tooltip = div.querySelector('.tooltip');
-      const tooltipText = tooltip.querySelector('.tooltip-text');
-
-      div.querySelector('.copy-btn').addEventListener('click', () => {
-        navigator.clipboard.writeText(window.location.origin + '/' + audio.src)
-          .then(() => {
-            tooltip.classList.add('show');
-            setTimeout(() => tooltip.classList.remove('show'), 1000);
-          })
-          .catch(() => {
-            tooltipText.textContent = 'Failed to copy';
-            tooltip.classList.add('show');
-            setTimeout(() => {
-              tooltipText.textContent = 'Copied!';
-              tooltip.classList.remove('show');
-            }, 1000);
-          });
-      });
-    }
-  });
+  copyBtn.onclick = () => {
+    navigator.clipboard.writeText(window.location.origin + "/" + song.src);
+    alert("Link Copied!");
+  };
 }
 
-// Initial load
-renderAudios();
+// Render song list (users see only the title)
+function renderSongs(filter=""){
+  songList.innerHTML = "";
+  const query = filter.toLowerCase();
 
-// Search function
-document.getElementById('searchBar').addEventListener('input', function() {
-  renderAudios(this.value);
+  songs
+    .sort((a,b)=>a.title.localeCompare(b.title))
+    .forEach((song,index)=>{
+      if(song.title.toLowerCase().includes(query)){
+        const div = document.createElement("div");
+        div.className = "song-item";
+        div.innerText = song.title; // Only show title
+        div.onclick = () => loadSong(index);
+        songList.appendChild(div);
+      }
+    });
+}
+
+// Initial render
+renderSongs();
+document.getElementById("searchBar").addEventListener("input", function(){
+  renderSongs(this.value);
 });
-
 </script>
 
 </body>
