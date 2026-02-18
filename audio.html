@@ -231,5 +231,17 @@ document.getElementById("searchBar").addEventListener("input", function(){
 });
 </script>
 
+  <!-- Your page content -->
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js')
+    .then(() => console.log('SW Registered'))
+    .catch(err => console.log('SW Failed', err));
+}
+</script>
+</body>
+</html>
+
 </body>
 </html>
