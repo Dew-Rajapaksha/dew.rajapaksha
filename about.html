@@ -113,5 +113,17 @@ Join and stay connected with us !!
 <p>© 2026 Dew Rajapaksha | All Rights Reserved</p>
 </footer>
 
+<!-- Your page content -->
+
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./service-worker.js')
+    .then(() => console.log('SW Registered'))
+    .catch(err => console.log('SW Failed', err));
+}
+</script>
+</body>
+</html>
+
 </body>
 </html>
